@@ -345,3 +345,75 @@ $ npm start
 ```
 
 You will see an index.html file will be created inside dist folder, which you will click to open and see the webpage with the text "My S-ReactENV React App!".
+
+But this approach has a downside that you have to manually refresh the webpage, in order to see the changes you have made. To have webpack watch our changes and refresh webpage whenever any change is made to our components, we can install webpack-dev-server.
+
+---
+
+### Instaling Webpack-dev-server
+
+```sh
+$ npm install webpack-dev-server --save-dev
+```
+
+Update the package.json file to use webpack-dev-server
+
+##### package.json
+
+```
+"start": "webpack-dev-server --mode development --open --hot",
+```
+
+> added two flags --open and --hot which opens and refreshes the web page whenever any change is made to components.
+
+##### What's now?
+
+We can do npm start at this point but, let's customize our port since webpack-dev-server comes with default port 8080.
+
+Add the following code of "devServer object with port 3000" inside the webpack.config.js file:
+
+##### webpack.config.js
+
+```
+const path = require("path");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+
+module.exports = {
+  entry: "./src/index.js",
+  output: {
+    path: path.join(__dirname, "/dist"),
+    filename: "index-bundle.js"
+  },
+  devServer: {
+    port: 3000
+  },
+  module: {
+    rules: [
+      {
+        test: /\.(js|jsx)$/,
+        exclude: /node_modules/,
+        use: ["babel-loader"]
+      },
+      {
+        test: /\.css$/,
+        use: ["style-loader", "css-loader"]
+      }
+    ]
+  },
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: "./src/index.html"
+    })
+  ]
+};
+```
+
+### Let's go!
+
+```sh
+$ npm start
+```
+
+You should see the browser window pops up and displays the content with localhost:3000.
+
+# Your React Boilerplate from scratch is ready to rock!
