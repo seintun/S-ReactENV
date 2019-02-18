@@ -37,10 +37,10 @@ $ cd react-boilerplate
 
 Let's create a base folder structure for our React files and components.
 
-> react-boilerplate
-> |--- src
-> |--- |--- components
-> |--- |--- styles
+react-boilerplate
+|--- src
+|--- |--- components
+|--- |--- styles
 
 ```sh
 $ mkdir -p src/components src/styles
