@@ -248,3 +248,100 @@ $ npm start
 So, what just happened? Webpack just compiled and create a new folder called dist with index-bundle.js containing transpiled ES5 code from index.js, where a lot of heavy-lifting are done for you after npm start is runnning. All right, let's terminate the npm start with Ctrl+C for now.
 
 ---
+
+### Creating the first React component, App.js and App.css
+
+Let's start building the React component, where most actions will happen in the future.
+
+```
+$ touch src/components/App.js src/styles/App.css
+```
+
+Add the following code inside App.js and App.css respectively.
+
+##### App.js
+
+```
+import React, { Component } from "react";
+import '../styles/App.css';
+
+class App extends Component {
+    render() {
+        return (
+            <div>
+                <h1>My S-ReactENV React App!</h1>
+            </div>
+        );
+    }
+}
+
+export default App;
+```
+
+##### App.css
+
+```
+h1 {
+    color: #27aedb;
+    text-align: center;
+}
+```
+
+Finally, let's import App.js inside the entry point Index.js and render on the HTML's DOM with the following code:
+
+##### Index.js
+
+```
+import React from "react";
+import ReactDOM from "react-dom";
+import App from "./components/App.js";
+
+ReactDOM.render(<App />, document.getElementById("root"));
+```
+
+It's not yet ready for rendering yet! We need to install html-webpack-plugin that will generate HTML file for us. This plugin injects the script inside the HTML file and writes to dist/index.html after compliling.
+
+```sh
+$ npm install html-webpack-plugin --save-dev
+```
+
+Update webpack.config.js file by importing html-webpack-plugin as follow:
+
+##### webpack.config.js
+
+```sh
+const path = require("path");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+
+module.exports = {
+  entry: "./src/index.js",
+  output: {
+    path: path.join(__dirname, "/dist"),
+    filename: "index-bundle.js"
+  },
+  module: {
+    rules: [
+      {
+        test: /\.(js|jsx)$/,
+        exclude: /node_modules/,
+        use: ["babel-loader"]
+      },
+      {
+        test: /\.css$/,
+        use: ["style-loader", "css-loader"]
+      }
+    ]
+  },
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: "./src/index.html"
+    })
+  ]
+};
+```
+
+```sh
+$ npm start
+```
+
+You will see an index.html file will be created inside dist folder, which you will click to open and see the webpage with the text "My S-ReactENV React App!".
