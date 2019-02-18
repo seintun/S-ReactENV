@@ -208,3 +208,43 @@ $ npm install css-loader style-loader --save-dev
 ```
 
 > Keep in mind that webpack executes the loaders from last to first i.e from right to left.
+
+### Babel
+
+Now, let's create configurations for Babel so that we can transpile ES6 and JSX into ES5
+
+```sh
+$ echo '{
+  "presets": ["@babel/preset-env", "@babel/preset-react"]
+}' >> .babelrc
+```
+
+> env: This preset is used to transpile the ES6/ES7/ES8 code to ES5.
+> react: This preset is used to transpile JSX code to ES5.
+
+---
+
+### Compiling files using Webpack
+
+I know we have been creating directories, files, and adding configurations. Let's compile to test it out!
+Add the following code inside the script object of the package.json file:
+
+##### package.json file
+
+```
+"start": "webpack --mode development --watch",
+"build": "webpack --mode production"
+```
+
+> --watch flag: Webpack to compile automatically whenever there is a change in files.
+> --mode flag: Webpack 4 has two modes: production and development, allowing us to choose which mode to use
+
+Moment of truth~
+
+```sh
+$ npm start
+```
+
+So, what just happened? Webpack just compiled and create a new folder called dist with index-bundle.js containing transpiled ES5 code from index.js, where a lot of heavy-lifting are done for you after npm start is runnning. All right, let's terminate the npm start with Ctrl+C for now.
+
+---
