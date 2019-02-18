@@ -76,8 +76,9 @@ The package.json file should looks like as follow:
 ### Installing dependency packages
 
 We will be primarily using Webpack, Babel, React and React-DOM for this guide.
+
 | packages | Functionality |
-| ------ | ------ |
+| :------: | ------ |
 | React | To definte and create elements, lifecycle hooks, etc. |
 | React-DOM | The glue between React and the DOM, giving access to DOM element |
 | Webpack | A static module bundler for modern JavaScript applications that bundle the project files into a single file for production |
