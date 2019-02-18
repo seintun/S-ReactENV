@@ -2,7 +2,13 @@
 
 ### Sein's React Environment Boilerplate
 
-S-ReactENV is a reference guide to build a boilerplate of minimalistic React Environment from scratch by using generic React, React-DOM, Webpack 4 and Babel.
+## Author: Sein Tun
+
+## GitHub: https://github.com/seintun
+
+## LinkedIn: https://www.linkedin.com/in/seintun
+
+> S-ReactENV is a reference guide to build a boilerplate of minimalistic React Environment from scratch by using generic React, React-DOM, Webpack 4 and Babel.
 
 ## Pre-requisites
 
@@ -135,3 +141,70 @@ Add the following code by Copy/Paste or using shortcut "!" but make sure you inc
 </body>
 </html>
 ```
+
+### Configurations
+
+### Webpack
+
+We need to define the entry and output directory of our app inside the webpack.config.js so that Webpack can bundle our JavaScript files into index.bundle.js file inside the /dist directory.
+
+```sh
+$ touch webpack.config.js
+```
+
+Add this following code inside your webpack.config.js
+
+##### webpack.config.js
+
+```
+const path = require("path");
+module.exports = {
+  entry: "./src/index.js",
+  output: {
+    path: path.join(__dirname, "/dist"),
+    filename: "index_bundle.js"
+  }
+};
+```
+
+### Webpack Loaders
+
+Now add some loaders inside this file, which will be responsible for loading and bundling the source files.
+Inside the webpack.config.js, add following lines of code:
+
+##### webpack.config.js
+
+```
+const path = require("path");
+
+module.exports = {
+  entry: "./src/index.js",
+  output: {
+    path: path.join(__dirname, "/dist"),
+    filename: "index-bundle.js"
+  },
+  module: {
+    rules: [
+      {
+        test: /\.(js|jsx)$/,
+        exclude: /node_modules/,
+        use: ["babel-loader"]
+      },
+      {
+        test: /\.css$/,
+        use: ["style-loader", "css-loader"]
+      }
+    ]
+  }
+};
+```
+
+Here babel-loader is used to load our JSX/JavaScript files and css-loader is used to load and bundle all of the CSS files into one file and style-loader will add all of the styles inside the style tag of the document.
+
+Before Webpack can use css-loader and style-loader we have to install them as a dev-dependency.
+
+```sh
+$ npm install css-loader style-loader --save-dev
+```
+
+> Keep in mind that webpack executes the loaders from last to first i.e from right to left.
